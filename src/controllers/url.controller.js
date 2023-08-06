@@ -56,3 +56,28 @@ export async function goToUrlById(req, res) {
         res.status(500).send(err.message)
     }
 }
+
+export async function deleteUrl(req, res){
+
+    const { authorization } = req.headers
+    const token = authorization?.replace("Bearer ", '')
+
+    const { id } = req.params
+
+    const user = res.locals.user
+
+    try {
+        const { rowCount } = await db.query("SELECT * FROM urls WHERE id=$1;", [id])
+        if(rowCount === 0) return res.status(404).send("Não encontrado")
+
+        const userUrl = await db.query(`SELECT * FROM urls WHERE id=$1 AND "userId"=$2;`, [id, user.rows[0].id])
+        if(userUrl.rows.length === 0) return res.status(401).send("Url não pertence ao usuário")
+
+        await db.query("DELETE FROM urls WHERE id=$1;", [id])
+        res.sendStatus(204)
+
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+
+}
