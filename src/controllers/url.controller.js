@@ -38,3 +38,21 @@ export async function getUrlById(req, res) {
         res.status(500).send(err.message)
     }
 } 
+
+export async function goToUrlById(req, res) {
+
+    const { shortUrl } = req.params
+
+    try {
+        const url = await db.query("SELECT * FROM urls WHERE short_url=$1;", [shortUrl])
+        if(url.rows.length === 0) return res.status(404).send("Url não encontrada")
+
+        await db.query("UPDATE urls SET visit_count = visit_count + 1 WHERE short_url=$1;", [shortUrl])
+
+        res.redirect(url.rows[0].url)
+
+
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
