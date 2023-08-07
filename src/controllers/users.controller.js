@@ -54,3 +54,34 @@ export async function getDataUser(req, res) {
         res.status(500).send(err.message)
     }
 }
+
+export async function getRanking(req, res){
+    const user = res.locals.user
+
+    try {
+        const { rows } = await db.query(`
+        SELECT
+            users.id AS id,
+            users.name AS name,
+            COUNT(urls.id) AS "linksCount",
+            SUM(urls.visit_count) AS "visitCount"
+        FROM urls
+        LEFT JOIN users ON urls."userId" = users.id
+        GROUP BY users.id
+        ORDER BY "visitCount" DESC
+        LIMIT 10
+        `)
+
+        const result = rows.map(({ id, name, linksCount, visitCount}) => ({
+            id: id,
+            name: name,
+            linksCount: linksCount,
+            visitCount: visitCount
+        }))
+
+        res.status(200).send(result)
+
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
