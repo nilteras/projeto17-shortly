@@ -2,9 +2,9 @@ import db from "../database/database.connection.js"
 
 export async function getDataUser(req, res) {
        
-    const { authorization } = req.headers
-    const token = authorization?.replace("Bearer ", '')
+   
     const user = res.locals.user
+   
 
     try {
         const { rows } = await db.query(`
