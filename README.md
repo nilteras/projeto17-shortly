@@ -12,7 +12,7 @@ Para executar este projeto localmente, siga estas etapas:
 
 **1** Clone este repositório em sua máquina local.
 
-git clone https://github.com/luizarn/shortly.git
+git clone https://github.com/niltonrdev/projeto17-shortly.git
 
 **2** Acesse o diretório do projeto.
 
