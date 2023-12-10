@@ -2,10 +2,7 @@ import { nanoid } from "nanoid"
 import db from "../database/database.connection.js"
 
 export async function createUrlShort(req, res) {
-    
-    const { authorization } = req.headers
-    const token = authorization?.replace("Bearer ", '')
-
+  
     const url = res.locals.url
     const user = res.locals.user
 
@@ -58,9 +55,6 @@ export async function goToUrlById(req, res) {
 }
 
 export async function deleteUrl(req, res){
-
-    const { authorization } = req.headers
-    const token = authorization?.replace("Bearer ", '')
 
     const { id } = req.params
 

@@ -56,7 +56,6 @@ export async function getDataUser(req, res) {
 }
 
 export async function getRanking(req, res){
-    const user = res.locals.user
 
     try {
         const { rows } = await db.query(`

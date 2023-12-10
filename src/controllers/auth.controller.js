@@ -18,7 +18,6 @@ export async function signUp(req, res) {
 }
 
 export async function signIn(req, res) {
-    const user = res.locals.user
     const checkUser = res.locals.checkUser
 
     const userToken = uuid()

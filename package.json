@@ -6,7 +6,8 @@
   "main": "./src/app.js",
   "scripts": {
     "start": "node ./src/app.js",
-    "dev": "npx nodemon ./src/app.js"
+    "dev": "npx nodemon ./src/app.js",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "eslint": "^8.55.0",
     "nodemon": "^3.0.1"
   }
 }
