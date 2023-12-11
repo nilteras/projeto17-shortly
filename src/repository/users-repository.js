@@ -1,13 +1,8 @@
 import db from "../database/database.connection.js"
 
-export async function getDataUser(req, res) {
-       
-   
-    const user = res.locals.user
-   
-
-    try {
-        const { rows } = await db.query(`
+async function getDataUserDB(user){
+    
+    const { rows } = await db.query(`
         SELECT 
             users.id AS id,
             users.name AS name,
@@ -47,18 +42,13 @@ export async function getDataUser(req, res) {
             shortenedUrls: urls
         }
 
-        res.status(200).send(result)
+        return result;
 
-
-    }catch (err) {
-        res.status(500).send(err.message)
-    }
 }
 
-export async function getRanking(req, res){
+async function getRankingDB(){
 
-    try {
-        const { rows } = await db.query(`
+    const { rows } = await db.query(`
         SELECT
             users.id AS id,
             users.name AS name,
@@ -78,9 +68,12 @@ export async function getRanking(req, res){
             visitCount: visitCount
         }))
 
-        res.status(200).send(result)
+        return result;
 
-    } catch (err) {
-        res.status(500).send(err.message)
-    }
+}
+
+
+export const usersRepository = {
+    getDataUserDB,
+    getRankingDB,
 }
